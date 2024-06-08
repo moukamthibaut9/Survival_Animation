@@ -10,18 +10,10 @@ normal_dog_speed=5
 normal_proie_speed=3
 dog_stop_time=5
 ticks_per_sec=1000 # permet une conversion des micro-secondes en secondes.
-son_time1=pygame.time.get_ticks()//ticks_per_sec
-son_time2=0
 
 # Chargement des images
 image_chien=pygame.image.load("animal_de_compagnie1.png")
 image_proie=pygame.image.load("Oiseau1.png")
-#chargement des sons
-son1_proie=pygame.mixer.Sound("son1_coq.wav")
-#son2_proie=pygame.mixer.Sound("son2_proie.wav")
-#son3_proie=pygame.mixer.Sound("son3_proie.wav")
-son1_chien=pygame.mixer.Sound("son1_chien.mp3")
-#son2_chien=pygame.mixer.Sound("son2_chien.wav")
 
 
 fenetre_jeu=pygame.display.set_mode(fenetre)
@@ -72,8 +64,6 @@ class Sous_Images:
             sous_image_chien=pygame.transform.scale(sous_image_chien,(rect2.width,rect2.height))
             if dir2==1 :
                 sous_image_chien=pygame.transform.flip(sous_image_chien,False,True)
-            #elif dir2==-1 :
-            #    sous_image_chien=pygame.transform.flip(sous_image_chien,False,False)
             self.rects_chien_marche_ord.append(sous_image_chien)
         self.dico_chien["marche_ord"]=self.rects_chien_marche_ord
         for img in self.rects_chien_cours:
@@ -153,7 +143,7 @@ class Chien:
             self.rect_chien=self.rect2_chien
         else :
             self.rect_chien=self.rect1_chien
-        #pygame.draw.rect(fenetre_jeu,pygame.Color("yellow"),self.rect_chien)
+            #pygame.draw.rect(fenetre_jeu,pygame.Color("yellow"),self.rect_chien)
         fenetre_jeu.blit(printed_image,self.rect_chien)
         if self.actual_dog_state=="marche_ord" or self.actual_dog_state=="assis": pygame.time.delay(40)
         else: pygame.time.delay(30)
@@ -226,7 +216,7 @@ class Proie:
         dico_images_proie=self.sous_images.obtention_sous_images_proie(self.rect_proie,self.direction_proie)
         if self.sous_image_index>=len(dico_images_proie[self.proie_state]):
             self.sous_image_index=0
-        #pygame.draw.rect(fenetre_jeu,pygame.Color("green"),self.rect_proie)
+            #pygame.draw.rect(fenetre_jeu,pygame.Color("green"),self.rect_proie)
         fenetre_jeu.blit(dico_images_proie[self.proie_state][self.sous_image_index],self.rect_proie)
         self.sous_image_index+=1
     def deplacement_proie(self):
@@ -245,9 +235,6 @@ class Game:
         self.chien.dessin_chien()
         self.proie.dessin_proie()
     def deplacement_animaux(self):
-        #son_time2=pygame.time.get_ticks()//ticks_per_sec
-        #if (son_time2-son_time1)%15==0: son1_proie.play()
-        #elif (son_time2-son_time1)%25==0: son1_chien.play()
         self.chien.deplacement_chien()
         self.proie.deplacement_proie()
         if self.proie.rect_proie.right>=0 and self.proie.rect_proie.left<=L_fenetre:
@@ -289,9 +276,6 @@ class Game:
             self.chien.direction1_chien=0
             self.chien.dog_stop=True
             self.chien.actual_dog_state="assis"
-            #son2_proie.play()
-            #pygame.time.wait(10)
-            #son2_chien.play()
             self.proie=Proie()
 
 
